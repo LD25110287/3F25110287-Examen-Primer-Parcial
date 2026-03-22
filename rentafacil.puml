@@ -1,0 +1,52 @@
+@startuml
+class Empresa {
+- clientes: Lista<Cliente>
++ vehiculos: Lista<Vehiculo>
++ agregarCliente(cliente: Cliente): void
++ agregarVehiculo(vehiculo: Vehiculo): void
++ registrarAlquiler(cliente: Cliente, vehiculos: List<Vehiculo>, inicio: Date, fin: Date): void
++ finalizarAlquiler(codigoAlquiler): void
++ verificarDisponibilidad(vehiculo: Vehiculo)
+}
+class Cliente {
+- id
+- nombre
+- dni
+- telefono
+}
+class Alquiler {
+- codigoAlquiler
+- fechaInicio
+- fechaFin
+- costoTotal
+- estado
++ calcularCostoTotal
++ finalizar
+}
+abstract class Vehiculo {
+- placa
+- marca
+- modelo
+- anioFabricacion
+- precioPorDia
++ getPrecioPorDia()
++ estaDisponible()
+}
+class Auto{
+}
+class Moto {
+- cilindradaCC
+}
+class Camioneta {
+- capacidadCargaKg: double
+}
+' Relaciones
+Empresa "1" *-- "*" Cliente : gestiona >
+Empresa "1" *-- "*" Alquiler : gestiona >
+Empresa "1" *-- "*" Vehiculo : gestiona >
+Alquiler "*" -> "1" Cliente : asociado a (máx 3 activos)
+Alquiler "1" -- "1..*" Vehiculo : incluye >
+Vehiculo <|-- Auto
+Vehiculo <|-- Moto
+Vehiculo <|-- Camioneta
+@enduml
